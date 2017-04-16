@@ -1,0 +1,19 @@
+<html>
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.12.3.js"></script>
+<script src="treedoc.js"></script>
+<script src="client.js"></script>
+<script>
+$(document).ready(function(){
+<!--var docName = window.location.href.split('/').slice(3); ---->
+var docName = window.location.href;
+$('#docname').html(docName);
+});
+</script>
+</head>
+<body>
+<h1 id="docname"></h1>
+<textarea id="textarea" style="width: 1000px; height: 500px;" onkeydown="keyDownRouter(event)" onkeypress="keyPressRouter(event)" ></textarea>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<html>
+  <head>
+    <script src="treedoc.js"></script>
+    
+    <script>
+      //tjoho
+      var tree = new Treedoc();
+      var siteID = 0;
+      var counter = 0;
+
+      //var treetext = document.getElementById("treetext");
+      
+      function insertInTree(e){
+      counter++;
+      console.log("---------------------NEW INSERT--------------------------");
+      var txtarea = document.getElementById("textareaid");
+      
+      //index to textbox'selection'
+      var selection = txtarea.selectionStart;
+
+      //new posID between selection-1 and selection and disambiguator(Needs to be generated)
+      var posID = tree.newPosID(tree.indexToPosID(selection - 1), tree.indexToPosID(selection), new Disambiguator(counter,siteID));
+      
+      //insert char at new posID
+      tree.insert(posID, String.fromCharCode(e.which));
+      
+      //render
+      document.getElementById("treetext").value = tree.toString();
+      }
+
+function testInsertBetweenMiniSiblings(){
+	//create root
+	var posID_Root = tree.newPosID(tree.indexToPosID(-1), tree.indexToPosID(0), new Disambiguator(0,0));
+	var posID_Right1 = tree.newPosID(tree.indexToPosID(0), tree.indexToPosID(1), new Disambiguator(1,0));
+	var posID_Right2 = tree.newPosID(tree.indexToPosID(0), tree.indexToPosID(1), new Disambiguator(0,1));
+	//var posID_RIGHTRIGHT = 
+	
+	
+	tree.insert(posID_Root, "A");
+	tree.insert(posID_Right1, "B");
+	tree.insert(posID_Right2, "D");
+	
+	
+	console.log("-----ADD BETWEEN SIBLINGS--------");
+	var posID_BetweenSiblings = tree.newPosID(tree.indexToPosID(1), tree.indexToPosID(2), new Disambiguator(1,1));
+	tree.insert(posID_BetweenSiblings, "C");
+	
+	document.getElementById("treetext").value = tree.toString();
+}
+
+
+function testMinisiblingsInRoot(){
+	var posID_Root1 = tree.newPosID(tree.indexToPosID(-1), tree.indexToPosID(0), new Disambiguator(0,0));
+	var posID_Root2 = tree.newPosID(tree.indexToPosID(-1), tree.indexToPosID(0), new Disambiguator(0,1));
+	
+	var betweenRootSiblings = new Array();
+	betweenRootSiblings.push(new Direction(null, new Disambiguator(0,0)));
+	betweenRootSiblings.push(new Direction(1, new Disambiguator(1,0)));
+	
+	
+	tree.insert(posID_Root1, "A");
+	tree.insert(posID_Root2, "C");
+	tree.insert(betweenRootSiblings, "B");
+	
+	document.getElementById("treetext").value = tree.toString();
+}
+
+/* EXAMPLE
+    * var t = new tree(); 
+    * t: ( )
+    * 
+    * t.insert([(null,dA)],'a');
+    * t: ( ('a',dA) )
+    * 
+    * (NO INSERT IF SAME DISAMBIGUATOR IN SAME NODE)
+    * t.insert([(null,dA)],'a');
+    * t: ( ('a',dA) )
+    *
+    * t.insert([(null,null), (0,dA)], 'b');
+    * t:         ( ('a',dA) )
+    *           /
+    * (('b', dA))
+    * 
+	* WRONG BELOW C: C would be inserted before b, because counter stuff
+	*
+    * t.insert([(null,null), (0,dB)],'c')
+    * t:                     ( ('a',dA) )
+    *                       /
+    * (('b', dA), ('c', dB))
+    * 
+    * t.insert([(null,null), (0,dA), (null,dA)], 'd');
+    *  t:                     ( ('a',dA) )
+    *                       /
+    * (('b', dA), ('c', dB))
+    *      \
+    *       (('d', dA))
+    * 
+    * t.insert([(null,null), (1,null), (1,dC)], 'e');
+    *  t:                     ( ('a',dA) )
+    *                       /              \
+    * (('b', dA), ('c', dB))                (  )
+    *      \                                    \
+    *       (('d', dA))                          (('e', dC))
+    * 
+    * t.insert([(null,null), (1,dB)], 'f');
+    *  t:                     ( ('a',dA) )
+    *                       /              \
+    * (('b', dA), ('c', dB))                ( ('f', dB ) )
+    *      \                                              \
+    *       (('d', dA))                                    (('e', dC))
+    * 
+    * t.insert([(null,null), (0,null), (0,dA)], 'g');
+    * t:                                ( ('a',dA) )
+    *                                 /              \
+    *           (('b', dA), ('c', dB))                ( ('f', dB ) )
+    *           /     \                                              \
+    *(('g', dA)) (('d', dA))                                          (('e', dC))
+    */
+function testExample(){
+	//CREATE PATHS
+	var p1 = new Array();
+	p1.push(new Direction(null,new Disambiguator(0,0)));
+	
+	var p2 = new Array();
+	p2.push(new Direction(null,null));
+	p2.push(new Direction(0,new Disambiguator(1,0)));
+	
+	var p3 = new Array();
+	p3.push(new Direction(null,null));
+	p3.push(new Direction(0,new Disambiguator(0,1)));
+	
+	var p4 = new Array();
+	p4.push(new Direction(null,null));
+	p4.push(new Direction(0,null)); 
+	p4.push(new Direction(1,new Disambiguator(2,0))); 
+	
+	var p5 = new Array();
+	p5.push(new Direction(null,null));
+	p5.push(new Direction(1,null));
+	p5.push(new Direction(1,new Disambiguator(0,2)));
+	
+	var p6 = new Array();
+	p6.push(new Direction(null,null));
+	p6.push(new Direction(1,new Disambiguator(1,1)));
+	
+	var p7 = new Array();
+	p7.push(new Direction(null,null));
+	p7.push(new Direction(0,null));
+	p7.push(new Direction(0,new Disambiguator(3,0)));
+	
+	var p8 = new Array();
+	p8.push(new Direction(null,null));
+	p8.push(new Direction(0,new Disambiguator(0,1)));
+	p8.push(new Direction(1,new Disambiguator(0,6))); //1 instead of null in direction(newPosID will always return a 1 in this case)
+	
+	
+	//INSERT IN TREE (Samma resultat oavsett ordning)
+	tree.insert(p1, "a");
+	tree.insert(p2,"b");
+	tree.insert(p3, "c");
+	tree.insert(p4, "d");	
+	tree.insert(p5, "e");
+	tree.insert(p6,"f");
+	tree.insert(p7,"g");
+	tree.insert(p8, "h");
+
+
+	//RENDER
+	document.getElementById("treetext").value = tree.toString();
+}
+</script>
+</head>
+<body>
+<textarea id="textareaid" onkeydown="insertInTree(event)")></textarea>
+<br>
+<h2>Run some test</h2>
+<textarea id="t" onkeydown="testExample()")></textarea>
+<br>
+<h2>Tree.toString()</h2>
+<textarea id="treetext"></textarea>
+</body>
+</html>
