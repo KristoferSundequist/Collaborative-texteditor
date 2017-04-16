@@ -7,14 +7,7 @@ OSPP (1DT096) 2016 - Grupp 04
 Projektarbete på kursen Operativsystem och processorienterad
 programmering (1DT096) våren 2016, Uppsala universitet.
 
-Detta är ett projekt för att skapa en kollaborativ text-editor (Multi-User Text Editor).
-
-> Denna fil är skrivet i formatet Markdown, läs mer här:
->
-> - https://help.github.com/articles/markdown-basics/
-
-> Det går att redigera, förhandsvisa och spara (commit) sidan direkt i
-> en webläsare via [projektsidan på github.com](./README.md).
+Detta är ett egenvalt projekt för att skapa en kollaborativ text-editor (Multi-User Text Editor).
 
 ## Nödvändigheter
 ###Nodejs
@@ -58,29 +51,3 @@ Sedan kan du köra testerna genom att skriva:
 Klienten skall nu vara tillgänglig på följande URL:
 
 [http://localhost:8888/](http://localhost:8888/)
-
-## Struktur
-
-Projektet består av följande kataloger.
-
-### doc
-
-Dokumentation, projektrapporter och andra viktiga dokument.
-
-### bin
-
-
-### meta
-
-- Presentation av gruppens medlemmar.
-- Gruppkontrakt.
-- Projektdagböcker.
-- Reflektioner på gruppens arbete.
-
-### src
-
-All källkod.
-
-## Fler rubriker
-
-> Lägg till mer information allt eftersom.
