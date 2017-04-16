@@ -27,10 +27,6 @@ När du har installerat **nodejs** och **npm** så kör du nedanstående kommand
 
 Nu ska paketen som används i programmet vara installerade.
 
-## Kompilera
-
-> Kortfattade instruktioner för hur projektet kompileras.
-
 ## Testa
 
 För att testa programmet krävs att du har paketen **mocha** och **chai**.
