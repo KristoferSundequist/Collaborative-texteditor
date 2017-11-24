@@ -1,14 +1,3 @@
-# Project MUTE
-
-Collaborative texteditor based on a Conflict free replicated datatype(CRDT) with a NodeJS client/server
-
-OSPP (1DT096) 2016 - Grupp 04
-
-Projektarbete på kursen Operativsystem och processorienterad
-programmering (1DT096) våren 2016, Uppsala universitet.
-
-Detta är ett egenvalt projekt för att skapa en kollaborativ text-editor (Multi-User Text Editor).
-
 ## Nödvändigheter
 ###Nodejs
 **Nodejs** och **npm** (nodejs package manager) behövs för att starta programmet.
